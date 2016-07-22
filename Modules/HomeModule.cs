@@ -55,6 +55,7 @@ namespace BandTracker
       Post["/venues/{id}"] = parameters => {
         Dictionary<string, object> model = new Dictionary<string, object>{};
         Venue foundVenue = Venue.Find(parameters.id);
+        System.Console
         foundVenue.AddBand(Request.Form["band-id"]);
         model.Add("venue", foundVenue);
         List<Band> venueBands = foundVenue.GetBands();

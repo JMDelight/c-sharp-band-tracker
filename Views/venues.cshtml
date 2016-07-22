@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Venues</title>
+  </head>
+  <body>
+    <ul>
+      @foreach(var venue in Model)
+      {
+        <li><a href="/venues/@venue.GetId()">@venue.GetVenueName()</a></li>
+      }
+    </ul>
+    <form  action="/venues" method="post">
+      <label for="venue-name">Enter the Venue's name.</label>
+      <input type="text" name="venue-name">
+      <button type="submit" name="button">Submit</button>
+    </form>
+    <a href="/bands">View all bands</a>
+  </body>
+</html>

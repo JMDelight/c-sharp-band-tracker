@@ -25,6 +25,20 @@ namespace BandTracker
         model.Add("band", foundBand);
         List<Venue> bandVenues = foundBand.GetVenues();
         model.Add("bandVenues", bandVenues);
+        List<Venue> allVenues = Venue.GetAll();
+        model.Add("allVenues", allVenues);
+        return View["band.cshtml", model];
+      };
+      Post["/bands/{id}"] = parameters => {
+        Dictionary<string, object> model = new Dictionary<string, object>{};
+        Band foundBand = Band.Find(parameters.id);
+        model.Add("band", foundBand);
+        Venue addedVenue = Venue.Find(Request.Form["venue-id"]);
+        addedVenue.AddBand(foundBand.GetId());
+        List<Venue> bandVenues = foundBand.GetVenues();
+        model.Add("bandVenues", bandVenues);
+        List<Venue> allVenues = Venue.GetAll();
+        model.Add("allVenues", allVenues);
         return View["band.cshtml", model];
       };
       Get["/venues"] = _ => {
@@ -37,6 +51,7 @@ namespace BandTracker
         List<Venue> allVenues = Venue.GetAll();
         return View["venues.cshtml", allVenues];
       };
+      Get["/venues/delete"] = _ => View["venues_delete.cshtml"];
       Delete["/venues"] = _ => {
         Venue.DeleteAll();
         List<Venue> allVenues = Venue.GetAll();
@@ -55,7 +70,6 @@ namespace BandTracker
       Post["/venues/{id}"] = parameters => {
         Dictionary<string, object> model = new Dictionary<string, object>{};
         Venue foundVenue = Venue.Find(parameters.id);
-        System.Console
         foundVenue.AddBand(Request.Form["band-id"]);
         model.Add("venue", foundVenue);
         List<Band> venueBands = foundVenue.GetBands();

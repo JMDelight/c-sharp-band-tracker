@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Are You Sure?</title>
+  </head>
+  <body>
+    <h2>Are you sure you want to delete all venues, this action is permanent.</h2>
+    <form action="/venues" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit">Yes. Delete all venues</button>
+    </form>
+    <br>
+    <a href="/bands">View all bands</a> |
+    <a href="/venues">View all venues</a>
+  </body>
+</html>

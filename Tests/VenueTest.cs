@@ -107,8 +107,6 @@ namespace BandTracker
       //Assert
       Assert.Equal(expectedResult, result);
     }
-
-
     public void Dispose()
     {
       Band.DeleteAll();

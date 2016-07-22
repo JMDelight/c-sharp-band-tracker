@@ -42,12 +42,20 @@
         <button type="submit" name="button">Submit</button>
       </form>
     }
-    <form  action="/venues" method="post">
+    <br>
+    <form  action='/venues/@Model["venue"].GetId()' method="post">
       <label for="venue-name">Edit the Venue's name.</label>
       <input type="text" name="venue-name" value='@Model["venue"].GetVenueName()'>
+      <input type="hidden" name="_method" value="PATCH">
       <input type="hidden" name="venue-id" value='@Model["venue"].GetId()'>
       <button type="submit" name="button">Submit</button>
     </form>
+    <br>
+    <form action='/venues/@Model["venue"].GetId()' method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit">Delete this venue</button>
+    </form>
+    <br>
     <a href="/bands">View all bands</a> |
     <a href="/venues">View all venues</a>
   </body>

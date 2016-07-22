@@ -90,10 +90,28 @@ namespace BandTracker
       Assert.Equal("Sweet Sounds", firstBand.GetBandName());
       Assert.Equal("Sweet Sounds", resultBand.GetBandName());
     }
+    [Fact]
+    public void Test_GetVenues_RetrievesVenuesForBandFromDatabase()
+    {
+      //Arrange
+      Venue firstVenue = new Venue("Cool Haps");
+      firstVenue.Save();
+      Band firstBand = new Band("Super Serpentine");
+      firstBand.Save();
+      List<Venue> expectedResult = new List<Venue> {firstVenue};
+
+      //Act
+      firstVenue.AddBand(firstBand.GetId());
+      List<Venue> result = firstBand.GetVenues();
+
+      //Assert
+      Assert.Equal(expectedResult, result);
+    }
 
     public void Dispose()
     {
       Band.DeleteAll();
+      Venue.DeleteAll();
     }
 
   }

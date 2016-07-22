@@ -12,7 +12,6 @@ namespace BandTracker
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=band_tracker_test;Integrated Security=SSPI;";
     }
-
     [Fact]
     public void Test_DatabaseEmptyAtFirst()
     {
@@ -22,7 +21,6 @@ namespace BandTracker
       //Assert
       Assert.Equal(0, result);
     }
-
     [Fact]
     public void Test_Equal_ReturnTrueIfNamesAreTheSame()
     {
@@ -33,11 +31,38 @@ namespace BandTracker
       //Act Assert
       Assert.Equal(firstVenue, otherFirstVenue);
     }
+    [Fact]
+    public void Test_Save_SavesToDatabase()
+    {
+      //Arrange
+      Venue newVenue = new Venue("Cool Haps");
+      List<Venue> expectedResult = new List<Venue> {newVenue};
+
+      //Act
+      newVenue.Save();
+      List<Venue> savedVenues = Venue.GetAll();
+
+      //Assert
+      Assert.Equal(expectedResult, savedVenues);
+    }
+    [Fact]
+    public void Test_Find_FindsVenueInDatabase()
+    {
+      //Arrange
+      Venue testVenue = new Venue("Cool Haps");
+      testVenue.Save();
+
+      //Act
+      Venue foundVenue = Venue.Find(testVenue.GetId());
+
+      //Assert
+      Assert.Equal(testVenue, foundVenue);
+    }
 
 
     public void Dispose()
     {
-
+      Venue.DeleteAll();
     }
   }
 }

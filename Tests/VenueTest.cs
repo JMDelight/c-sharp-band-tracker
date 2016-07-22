@@ -58,6 +58,38 @@ namespace BandTracker
       //Assert
       Assert.Equal(testVenue, foundVenue);
     }
+    [Fact]
+    public void Test_Delete_DeletesASingleVenueById()
+    {
+      //Arrange
+      Venue firstVenue = new Venue("Cool Haps");
+      Venue secondVenue = new Venue("Sweet Spots");
+      firstVenue.Save();
+      secondVenue.Save();
+      List<Venue> expectedResult = new List<Venue> {firstVenue};
+
+      //Act
+      secondVenue.Delete();
+      List<Venue> result = Venue.GetAll();
+
+      //Assert
+      Assert.Equal(expectedResult, result);
+    }
+    [Fact]
+    public void Test_Update_UpdatesNameInDatabase()
+    {
+      //Arrange
+      Venue firstVenue = new Venue("Cool Haps");
+      firstVenue.Save();
+
+      //Act
+      firstVenue.Update("Sweet Spots");
+      Venue resultVenue = Venue.Find(firstVenue.GetId());
+
+      //Assert
+      Assert.Equal("Sweet Spots", firstVenue.GetVenueName());
+      Assert.Equal("Sweet Spots", resultVenue.GetVenueName());
+    }
 
 
     public void Dispose()

@@ -12,12 +12,89 @@ namespace BandTracker
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=band_tracker_test;Integrated Security=SSPI;";
     }
+    [Fact]
+    public void Test_DatabaseEmptyAtFirst()
+    {
+      //Arrange, Act
+      int result = Band.GetAll().Count;
 
+      //Assert
+      Assert.Equal(0, result);
+    }
+    [Fact]
+    public void Test_Equal_ReturnTrueIfNamesAreTheSame()
+    {
+      //Arrange
+      Band firstBand = new Band("Super Serpentine");
+      Band otherFirstBand = new Band("Super Serpentine");
 
+      //Act Assert
+      Assert.Equal(firstBand, otherFirstBand);
+    }
+    [Fact]
+    public void Test_Save_SavesToDatabase()
+    {
+      //Arrange
+      Band newBand = new Band("Super Serpentine");
+      List<Band> expectedResult = new List<Band> {newBand};
+
+      //Act
+      newBand.Save();
+      List<Band> savedBands = Band.GetAll();
+
+      //Assert
+      Assert.Equal(expectedResult, savedBands);
+    }
+    [Fact]
+    public void Test_Find_FindsBandInDatabase()
+    {
+      //Arrange
+      Band testBand = new Band("Super Serpentine");
+      testBand.Save();
+
+      //Act
+      Band foundBand = Band.Find(testBand.GetId());
+
+      //Assert
+      Assert.Equal(testBand, foundBand);
+    }
+    [Fact]
+    public void Test_Delete_DeletesASingleBandById()
+    {
+      //Arrange
+      Band firstBand = new Band("Super Serpentine");
+      Band secondBand = new Band("Sweet Sounds");
+      firstBand.Save();
+      secondBand.Save();
+      List<Band> expectedResult = new List<Band> {firstBand};
+
+      //Act
+      secondBand.Delete();
+      List<Band> result = Band.GetAll();
+
+      //Assert
+      Assert.Equal(expectedResult, result);
+    }
+    [Fact]
+    public void Test_Update_UpdatesNameInDatabase()
+    {
+      //Arrange
+      Band firstBand = new Band("Super Serpentine");
+      firstBand.Save();
+
+      //Act
+      firstBand.Update("Sweet Sounds");
+      Band resultBand = Band.Find(firstBand.GetId());
+
+      //Assert
+      Assert.Equal("Sweet Sounds", firstBand.GetBandName());
+      Assert.Equal("Sweet Sounds", resultBand.GetBandName());
+    }
 
     public void Dispose()
     {
-
+      Band.DeleteAll();
     }
+
   }
 }

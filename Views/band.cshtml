@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>@Model["band"].GetBandName()</title>
+  </head>
+  <body>
+    <h2>@Model["band"].GetBandName()</h2>
+    @if(Model["bandVenues"].Count == 0)
+    {
+      <h5>This band has been added to no venues yet.</h5>
+    }
+    <ul>
+      @foreach(var venue in Model["bandVenues"])
+      {
+        <li><a href="/venues/@venue.GetId()">@venue.GetVenueName()</a></li>
+      }
+    </ul>
+
+    <a href="/venues">View all venues</a>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bands</title>
+  </head>
+  <body>
+    <ul>
+      @foreach(var band in Model)
+      {
+        <li><a href="/bands/@band.GetId()">@band.GetBandName()</a></li>
+      }
+    </ul>
+    <form  action="/bands" method="post">
+      <label for="band-name">Enter the Band's name.</label>
+      <input type="text" name="band-name">
+      <button type="submit" name="button">Submit</button>
+    </form>
+    <a href="/bands">View all bands</a> |
+    <a href="/venues">View all venues</a>
+  </body>
+</html>
